@@ -24,13 +24,15 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
+const config = useRuntimeConfig();
 
 const email: Ref<string> = ref("");
 const isSubscribed: Ref<boolean> = ref(false);
 
 const subscribe = async () => {
   window.fpr("referral", { email: email.value });
-  const res = await fetch("/api/sc1/subscribe", {
+
+  const res = await fetch("https://firstpromoter.com/api/v1/track/sale", {
     method: "POST",
     body: JSON.stringify({
       email: email.value,
@@ -39,9 +41,11 @@ const subscribe = async () => {
       currency: "USD",
     }),
     headers: {
+      "x-api-key": config.FIRSTPROMOTER_API_KEY,
       "Content-Type": "application/json",
     },
   });
+
   console.log(res);
   isSubscribed.value = true;
 };

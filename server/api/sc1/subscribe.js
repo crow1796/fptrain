@@ -13,8 +13,9 @@ export default async (req, res) => {
   try {
     const fpRes = await firstpromoterApiNode.post("track/sale", {
       email: body.email,
+      plan: "sc1-50",
       amount: 50 * 100,
-      event_id: `sale-${body.email}`,
+      currency: "USD",
     });
 
     status = true;
